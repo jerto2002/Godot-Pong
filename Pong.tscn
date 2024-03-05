@@ -1,14 +1,16 @@
-[gd_scene load_steps=5 format=3 uid="uid://dlkh6jx3iiwj2"]
+[gd_scene load_steps=6 format=3 uid="uid://dlkh6jx3iiwj2"]
 
 [ext_resource type="Texture2D" uid="uid://8x6viflhx02m" path="res://textures/white.png" id="1_0fmu4"]
+[ext_resource type="Script" path="res://node.cs" id="1_7tu3r"]
 [ext_resource type="Script" path="res://scripts/Player1.cs" id="3_ibdo7"]
 [ext_resource type="Script" path="res://scripts/Player2.cs" id="4_f2qkx"]
 [ext_resource type="Script" path="res://scripts/Ball.cs" id="4_ufm82"]
 
 [node name="Node2D" type="Node2D"]
+script = ExtResource("1_7tu3r")
 
 [node name="Player1" type="Sprite2D" parent="."]
-position = Vector2(25, 348)
+position = Vector2(22, 350)
 scale = Vector2(0.338462, 0.596667)
 texture = ExtResource("1_0fmu4")
 script = ExtResource("3_ibdo7")
@@ -20,7 +22,7 @@ texture = ExtResource("1_0fmu4")
 script = ExtResource("4_ufm82")
 
 [node name="Player2" type="Sprite2D" parent="."]
-position = Vector2(1132, 373)
+position = Vector2(1130, 350)
 scale = Vector2(0.338462, 0.596667)
 texture = ExtResource("1_0fmu4")
 script = ExtResource("4_f2qkx")
