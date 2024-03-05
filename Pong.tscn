@@ -1,0 +1,23 @@
+[gd_scene load_steps=5 format=3 uid="uid://dlkh6jx3iiwj2"]
+
+[ext_resource type="Texture2D" uid="uid://bmf8lb1dv76dn" path="res://icon.svg" id="1_dlo68"]
+[ext_resource type="Script" path="res://scripts/Player1.cs" id="2_2tulx"]
+[ext_resource type="Script" path="res://scripts/Player2.cs" id="3_ibdo7"]
+[ext_resource type="Script" path="res://scripts/Ball.cs" id="4_ufm82"]
+
+[node name="Node2D" type="Node2D"]
+
+[node name="Player1" type="Sprite2D" parent="."]
+position = Vector2(1091, 331)
+texture = ExtResource("1_dlo68")
+script = ExtResource("2_2tulx")
+
+[node name="Player2" type="Sprite2D" parent="."]
+position = Vector2(61, 318)
+texture = ExtResource("1_dlo68")
+script = ExtResource("3_ibdo7")
+
+[node name="Ball" type="Sprite2D" parent="."]
+position = Vector2(546, 324)
+texture = ExtResource("1_dlo68")
+script = ExtResource("4_ufm82")
