@@ -10,7 +10,7 @@
 script = ExtResource("1_7tu3r")
 
 [node name="Player1" type="Sprite2D" parent="."]
-position = Vector2(22, 350)
+position = Vector2(66, 350)
 scale = Vector2(0.338462, 0.596667)
 texture = ExtResource("1_0fmu4")
 script = ExtResource("3_ibdo7")
@@ -22,7 +22,17 @@ texture = ExtResource("1_0fmu4")
 script = ExtResource("4_ufm82")
 
 [node name="Player2" type="Sprite2D" parent="."]
-position = Vector2(1130, 350)
+position = Vector2(1086, 350)
 scale = Vector2(0.338462, 0.596667)
 texture = ExtResource("1_0fmu4")
 script = ExtResource("4_f2qkx")
+
+[node name="goal1" type="Sprite2D" parent="."]
+position = Vector2(9, 324.124)
+scale = Vector2(0.114557, 1.72734)
+texture = ExtResource("1_0fmu4")
+
+[node name="goal2" type="Sprite2D" parent="."]
+position = Vector2(1144, 324.312)
+scale = Vector2(0.114557, 1.72634)
+texture = ExtResource("1_0fmu4")
