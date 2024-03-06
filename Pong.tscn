@@ -45,7 +45,6 @@ script = ExtResource("4_ufm82")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Ball" groups=["Ball"]]
 position = Vector2(0, 8.15392e-05)
-scale = Vector2(1, 1)
 shape = SubResource("RectangleShape2D_1hny8")
 
 [node name="Player2" type="Sprite2D" parent="."]
@@ -76,27 +75,31 @@ texture = ExtResource("1_0fmu4")
 position = Vector2(-3.05176e-05, 0)
 shape = SubResource("RectangleShape2D_yr1uc")
 
-[node name="Wall" type="Area2D" parent="." groups=["TopWall"]]
+[node name="Top Wall" type="Area2D" parent="." groups=["TopWall"]]
 position = Vector2(576.545, 7.9583)
 rotation = 1.5708
 scale = Vector2(0.118829, 2.98716)
 
-[node name="Sprite" type="Sprite2D" parent="Wall"]
+[node name="Sprite" type="Sprite2D" parent="Top Wall"]
 texture = ExtResource("1_0fmu4")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Wall"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Top Wall"]
 position = Vector2(0.350983, 0.0150299)
 scale = Vector2(0.96, 0.96)
 shape = SubResource("RectangleShape2D_5k76i")
 
-[node name="wall2" type="Sprite2D" parent="."]
+[node name="Bottom Wall" type="Area2D" parent="." groups=["BottomWall"]]
 position = Vector2(576.545, 640.28)
 rotation = 1.5708
 scale = Vector2(0.118829, 2.98716)
+
+[node name="Sprite" type="Sprite2D" parent="Bottom Wall"]
+position = Vector2(-0.000488281, 0)
+scale = Vector2(1, 1)
 texture = ExtResource("1_0fmu4")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="wall2" groups=["Wall"]]
-position = Vector2(0.351006, 0.0150299)
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Bottom Wall" groups=["Wall"]]
+position = Vector2(0.350098, 0.0150299)
 scale = Vector2(0.96, 0.96)
 shape = SubResource("RectangleShape2D_5k76i")
 

@@ -12,36 +12,45 @@ public partial class Player1 : CharacterBody2D
 		Area2D area = GetNode<Area2D>("Area2D");
 		// Connect the area_entered signal of the Area2D node to the _on_Area2D_area_entered method
 		area.Connect("area_entered", new Callable(this, nameof(_on_Area2D_area_entered)));
+		area.Connect("area_exited", new Callable(this, nameof(_on_Area2D_area_exited)));
 	}
-
-
 	List<Key> pressedKeys = new List<Key>();
-	bool collidedWithWall = false;
+	bool collidedWithTopWall = false;
+		bool collidedWithBottenWall = false;
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
 	public override void _Process(double delta)
 	{
-		movement(collidedWithWall);
+		movement(collidedWithTopWall, collidedWithBottenWall);
 	}
 
 	// This method will be called when the area_entered signal is emitted
 	private void _on_Area2D_area_entered(Area2D area)
 	{
-		if (area.IsInGroup("wall"))
+		if (area.IsInGroup("TopWall"))
 		{
-			collidedWithWall = true;
+			collidedWithTopWall = true;
 		}
-		else
+		if (area.IsInGroup("BottomWall"))
 		{
-			collidedWithWall = false;
+			collidedWithBottenWall = true;
+		}
+	}
+	private void _on_Area2D_area_exited(Area2D area)
+	{
+		if (area.IsInGroup("TopWall"))
+		{
+			collidedWithTopWall = false;
+		}
+			if (area.IsInGroup("BottomWall"))
+		{
+			collidedWithBottenWall = false;
 		}
 	}
 
-
-	public void movement(bool stopAtWall)
+	public void movement(bool stopAtTopWall, bool stopAtBottomWall)
 	{
-		if (!stopAtWall)
-		{
+		
 			//Godot.Sprite2D child = this.GetNode<Godot.Sprite2D>("ChildNode");
 			float amount = -4;
 
@@ -74,15 +83,21 @@ public partial class Player1 : CharacterBody2D
 				Key lastKey = pressedKeys[pressedKeys.Count - 1];
 				if (lastKey == Key.S)
 				{
-					movement.Y -= amount; // Move upwards
+					if (!stopAtBottomWall)
+					{
+						movement.Y -= amount; // Move downwards
+					}
 				}
 				else if (lastKey == Key.Z)
 				{
-					movement.Y += amount; // Move downwards
+					if (!stopAtTopWall)
+					{
+						movement.Y += amount; // Move upwards
+					}
 				}
 			}
 			this.Position += movement;
-		}
+		
 
 	}
 }
