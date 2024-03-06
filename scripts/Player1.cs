@@ -5,6 +5,10 @@ using System.Linq;
 
 public partial class Player1 : CharacterBody2D
 {
+	List<Key> pressedKeys = new List<Key>();
+	bool collidedWithTopWall = false;
+	bool collidedWithBottenWall = false;
+
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
@@ -14,10 +18,7 @@ public partial class Player1 : CharacterBody2D
 		area.Connect("area_entered", new Callable(this, nameof(_on_Area2D_area_entered)));
 		area.Connect("area_exited", new Callable(this, nameof(_on_Area2D_area_exited)));
 	}
-	List<Key> pressedKeys = new List<Key>();
-	bool collidedWithTopWall = false;
-		bool collidedWithBottenWall = false;
-
+	
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
 	public override void _Process(double delta)
 	{
@@ -27,77 +28,45 @@ public partial class Player1 : CharacterBody2D
 	// This method will be called when the area_entered signal is emitted
 	private void _on_Area2D_area_entered(Area2D area)
 	{
-		if (area.IsInGroup("TopWall"))
-		{
-			collidedWithTopWall = true;
-		}
-		if (area.IsInGroup("BottomWall"))
-		{
-			collidedWithBottenWall = true;
-		}
+		if (area.IsInGroup("TopWall")) collidedWithTopWall = true;
+
+		if (area.IsInGroup("BottomWall")) collidedWithBottenWall = true;
+
 	}
 	private void _on_Area2D_area_exited(Area2D area)
 	{
-		if (area.IsInGroup("TopWall"))
-		{
-			collidedWithTopWall = false;
-		}
-			if (area.IsInGroup("BottomWall"))
-		{
-			collidedWithBottenWall = false;
-		}
+		if (area.IsInGroup("TopWall")) collidedWithTopWall = false;
+
+		if (area.IsInGroup("BottomWall")) collidedWithBottenWall = false;
 	}
 
 	public void movement(bool stopAtTopWall, bool stopAtBottomWall)
 	{
-		
-			//Godot.Sprite2D child = this.GetNode<Godot.Sprite2D>("ChildNode");
-			float amount = -4;
+		float amount = -4;
 
-			// Calculate movement vector based on pressed keys
-			Vector2 movement = new Vector2(0, 0);
+		// Calculate movement vector based on pressed keys
+		Vector2 movement = new Vector2(0, 0);
 
-			// Check for pressed keys and store them in the array if they are not already present
-			if (Input.IsKeyPressed(Key.Z) && !pressedKeys.Contains(Key.Z))
-			{
-				pressedKeys.Add(Key.Z);
-			}
-			else if (Input.IsKeyPressed(Key.S) && !pressedKeys.Contains(Key.S))
-			{
-				pressedKeys.Add(Key.S);
-			}
+		// Check for pressed keys and store them in the array if they are not already present
+		if (Input.IsKeyPressed(Key.Z) && !pressedKeys.Contains(Key.Z)) pressedKeys.Add(Key.Z);
+		else if (Input.IsKeyPressed(Key.S) && !pressedKeys.Contains(Key.S)) pressedKeys.Add(Key.S);
 
-			// Remove keys from the list if they are not pressed in the current frame
-			for (int i = pressedKeys.Count - 1; i >= 0; i--)
-			{
-				if (!Input.IsKeyPressed(pressedKeys[i]))
-				{
-					pressedKeys.RemoveAt(i);
-				}
-			}
+		// Remove keys from the list if they are not pressed in the current frame
+		for (int i = pressedKeys.Count - 1; i >= 0; i--)
+		{
+			if (!Input.IsKeyPressed(pressedKeys[i])) pressedKeys.RemoveAt(i);
+		}
 
-			//GD.Print("Pressed keys: " + "[" + string.Join(",", pressedKeys.Select(k => k.ToString())) + "]");
+		//GD.Print("Pressed keys: " + "[" + string.Join(",", pressedKeys.Select(k => k.ToString())) + "]");
 
-			if (pressedKeys.Count > 0)
-			{
-				Key lastKey = pressedKeys[pressedKeys.Count - 1];
-				if (lastKey == Key.S)
-				{
-					if (!stopAtBottomWall)
-					{
-						movement.Y -= amount; // Move downwards
-					}
-				}
-				else if (lastKey == Key.Z)
-				{
-					if (!stopAtTopWall)
-					{
-						movement.Y += amount; // Move upwards
-					}
-				}
-			}
-			this.Position += movement;
-		
+		if (pressedKeys.Count > 0) //check if anny key is pressed
+		{
+			Key lastKey = pressedKeys[pressedKeys.Count - 1]; // check wich key is last pressed
 
+			if (lastKey == Key.S && !stopAtBottomWall) movement.Y -= amount;
+			else if (lastKey == Key.Z && !stopAtTopWall) movement.Y += amount;
+		}
+
+		this.Position += movement;
 	}
 }
