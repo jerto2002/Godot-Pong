@@ -12,59 +12,56 @@ size = Vector2(188.389, 1.47299)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_yr1uc"]
 size = Vector2(130, 375.419)
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_2vmsx"]
-size = Vector2(130.939, 375.056)
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_1hny8"]
+size = Vector2(129.653, 375)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_5k76i"]
 size = Vector2(134.647, 390.91)
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_1hny8"]
-size = Vector2(129.653, 375)
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_2vmsx"]
+size = Vector2(130.939, 375.056)
 
 [node name="Node2D" type="Node2D"]
 script = ExtResource("1_7tu3r")
 
-[node name="CharacterBody2D" type="CharacterBody2D" parent="."]
+[node name="Player1" type="CharacterBody2D" parent="."]
 script = ExtResource("3_ibdo7")
 
-[node name="Player1" type="Sprite2D" parent="CharacterBody2D"]
+[node name="Sprite" type="Sprite2D" parent="Player1"]
 position = Vector2(65.9999, 350)
 scale = Vector2(0.338462, 0.596667)
 texture = ExtResource("1_0fmu4")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="CharacterBody2D"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Player1"]
 position = Vector2(66, 349.931)
 rotation = 1.5708
 scale = Vector2(1.18829, 29.8716)
 shape = SubResource("RectangleShape2D_aut1o")
 
-[node name="Player2" type="Sprite2D" parent="."]
+[node name="Player2" type="CharacterBody2D" parent="."]
 position = Vector2(1086, 350)
 scale = Vector2(0.338462, 0.596667)
+script = ExtResource("3_ibdo7")
+
+[node name="Sprite" type="Sprite2D" parent="Player2"]
 texture = ExtResource("1_0fmu4")
 script = ExtResource("4_f2qkx")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Player2" groups=["Player"]]
-position = Vector2(-3.05176e-05, 0)
 shape = SubResource("RectangleShape2D_yr1uc")
 
-[node name="goal1" type="Sprite2D" parent="."]
-position = Vector2(9, 324.124)
-scale = Vector2(0.114557, 1.72734)
+[node name="Ball" type="StaticBody2D" parent="."]
+position = Vector2(579, 326)
+scale = Vector2(0.323943, 0.12)
+script = ExtResource("4_ufm82")
+
+[node name="Sprite" type="Sprite2D" parent="Ball"]
+scale = Vector2(1, 1)
 texture = ExtResource("1_0fmu4")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="goal1" groups=["Goal"]]
-position = Vector2(0, -0.028183)
-shape = SubResource("RectangleShape2D_2vmsx")
-
-[node name="goal2" type="Sprite2D" parent="."]
-position = Vector2(1144, 324.312)
-scale = Vector2(0.114557, 1.72634)
-texture = ExtResource("1_0fmu4")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="goal2" groups=["Goal"]]
-position = Vector2(-3.05176e-05, 0)
-shape = SubResource("RectangleShape2D_yr1uc")
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Ball" groups=["Ball"]]
+scale = Vector2(1, 1)
+shape = SubResource("RectangleShape2D_1hny8")
 
 [node name="Bottom Wall" type="StaticBody2D" parent="." groups=["BottomWall"]]
 position = Vector2(576.545, 640.28)
@@ -95,15 +92,42 @@ position = Vector2(0.350983, 0.0150299)
 scale = Vector2(0.96, 0.96)
 shape = SubResource("RectangleShape2D_5k76i")
 
-[node name="Ball" type="StaticBody2D" parent="."]
-position = Vector2(579, 326)
-scale = Vector2(0.323943, 0.12)
-script = ExtResource("4_ufm82")
+[node name="Goal2" type="StaticBody2D" parent="." groups=["BottomWall"]]
+position = Vector2(1210.05, 1429.65)
+rotation = 1.5708
+scale = Vector2(0.205139, 0.3422)
+skew = 5.42402e-05
 
-[node name="Sprite" type="Sprite2D" parent="Ball"]
-scale = Vector2(1, 1)
+[node name="Sprite" type="Sprite2D" parent="Goal2"]
+position = Vector2(-5388.23, 193.008)
+rotation = -1.57089
+scale = Vector2(0.334766, 8.41545)
+skew = 9.08375e-05
 texture = ExtResource("1_0fmu4")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Ball" groups=["Ball"]]
-scale = Vector2(1, 1)
-shape = SubResource("RectangleShape2D_1hny8")
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Goal2" groups=["Goal"]]
+position = Vector2(-5388.23, 193.008)
+rotation = -1.57089
+scale = Vector2(0.334766, 8.41545)
+skew = 9.08375e-05
+shape = SubResource("RectangleShape2D_yr1uc")
+
+[node name="Goal1" type="StaticBody2D" parent="." groups=["BottomWall"]]
+position = Vector2(147.619, 2793.62)
+rotation = 1.5708
+scale = Vector2(0.354345, 0.0392014)
+skew = 0.000822067
+
+[node name="goal1" type="Sprite2D" parent="Goal1"]
+position = Vector2(-6968.86, 3536.08)
+rotation = -1.57089
+scale = Vector2(2.92227, 4.87474)
+skew = 9.07183e-05
+texture = ExtResource("1_0fmu4")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Goal1" groups=["Goal"]]
+position = Vector2(-6969, 3536.08)
+rotation = -1.57089
+scale = Vector2(2.92227, 4.87474)
+skew = 9.07183e-05
+shape = SubResource("RectangleShape2D_2vmsx")
