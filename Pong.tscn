@@ -24,7 +24,7 @@ size = Vector2(130.939, 375.056)
 [node name="Node2D" type="Node2D"]
 script = ExtResource("1_7tu3r")
 
-[node name="Player1" type="CharacterBody2D" parent="."]
+[node name="Player1" type="CharacterBody2D" parent="." groups=["Player1"]]
 script = ExtResource("3_ibdo7")
 
 [node name="Sprite" type="Sprite2D" parent="Player1"]
@@ -39,28 +39,30 @@ scale = Vector2(1.18829, 29.8716)
 shape = SubResource("RectangleShape2D_aut1o")
 
 [node name="Player2" type="CharacterBody2D" parent="."]
-position = Vector2(1086, 350)
-scale = Vector2(0.338462, 0.596667)
 script = ExtResource("3_ibdo7")
 
 [node name="Sprite" type="Sprite2D" parent="Player2"]
+position = Vector2(1086, 350)
+scale = Vector2(0.338, 0.597)
 texture = ExtResource("1_0fmu4")
 script = ExtResource("4_f2qkx")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Player2" groups=["Player"]]
+position = Vector2(1086, 350)
+scale = Vector2(0.338, 0.597)
 shape = SubResource("RectangleShape2D_yr1uc")
 
 [node name="Ball" type="StaticBody2D" parent="."]
-position = Vector2(579, 326)
-scale = Vector2(0.323943, 0.12)
 script = ExtResource("4_ufm82")
 
 [node name="Sprite" type="Sprite2D" parent="Ball"]
-scale = Vector2(1, 1)
+position = Vector2(579, 326)
+scale = Vector2(0.324, 0.12)
 texture = ExtResource("1_0fmu4")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Ball" groups=["Ball"]]
-scale = Vector2(1, 1)
+position = Vector2(579, 326)
+scale = Vector2(0.325, 0.12)
 shape = SubResource("RectangleShape2D_1hny8")
 
 [node name="Bottom Wall" type="StaticBody2D" parent="." groups=["BottomWall"]]
