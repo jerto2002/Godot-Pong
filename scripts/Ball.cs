@@ -1,7 +1,7 @@
 using Godot;
 using System;
 
-public partial class Ball : Sprite2D
+public partial class Ball : StaticBody2D
 {
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
@@ -13,12 +13,12 @@ public partial class Ball : Sprite2D
 	{
 	}
 
-	private Vector2 _velocity = new Vector2(250, 250);
+		private Vector2 _velocity = new Vector2(250, 250);
 
-    // public override void _PhysicsProcess(double delta)
-    // {
-    //     var collisionInfo = MoveAndCollide(_velocity * (float)delta);
-    //     if (collisionInfo != null)
-    //         _velocity = _velocity.Bounce(collisionInfo.GetNormal());
-    // }
+    public override void _PhysicsProcess(double delta)
+    {
+        var collisionInfo = MoveAndCollide(_velocity * (float)delta);
+        if (collisionInfo != null)
+            _velocity = _velocity.Bounce(collisionInfo.GetNormal());
+    }
 }
