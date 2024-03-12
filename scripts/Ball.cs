@@ -12,4 +12,13 @@ public partial class Ball : Sprite2D
 	public override void _Process(double delta)
 	{
 	}
+
+	private Vector2 _velocity = new Vector2(250, 250);
+
+    // public override void _PhysicsProcess(double delta)
+    // {
+    //     var collisionInfo = MoveAndCollide(_velocity * (float)delta);
+    //     if (collisionInfo != null)
+    //         _velocity = _velocity.Bounce(collisionInfo.GetNormal());
+    // }
 }

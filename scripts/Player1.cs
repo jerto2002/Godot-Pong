@@ -6,43 +6,22 @@ using System.Linq;
 public partial class Player1 : CharacterBody2D
 {
 	List<Key> pressedKeys = new List<Key>();
-	bool collidedWithTopWall = false;
-	bool collidedWithBottenWall = false;
 
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
-		// Ensure that the Area2D node is added as a child of the character
 		Area2D area = GetNode<Area2D>("Area2D");
-		// Connect the area_entered signal of the Area2D node to the _on_Area2D_area_entered method
-		area.Connect("area_entered", new Callable(this, nameof(_on_Area2D_area_entered)));
-		area.Connect("area_exited", new Callable(this, nameof(_on_Area2D_area_exited)));
 	}
 	
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
 	public override void _Process(double delta)
 	{
-		movement(collidedWithTopWall, collidedWithBottenWall);
+		movement();
 	}
 
-	// This method will be called when the area_entered signal is emitted
-	private void _on_Area2D_area_entered(Area2D area)
+	public void movement()
 	{
-		if (area.IsInGroup("TopWall")) collidedWithTopWall = true;
-
-		if (area.IsInGroup("BottomWall")) collidedWithBottenWall = true;
-
-	}
-	private void _on_Area2D_area_exited(Area2D area)
-	{
-		if (area.IsInGroup("TopWall")) collidedWithTopWall = false;
-
-		if (area.IsInGroup("BottomWall")) collidedWithBottenWall = false;
-	}
-
-	public void movement(bool stopAtTopWall, bool stopAtBottomWall)
-	{
-		float amount = -4;
+		float velocity = -4;
 
 		// Calculate movement vector based on pressed keys
 		Vector2 movement = new Vector2(0, 0);
@@ -56,17 +35,19 @@ public partial class Player1 : CharacterBody2D
 		{
 			if (!Input.IsKeyPressed(pressedKeys[i])) pressedKeys.RemoveAt(i);
 		}
-
 		//GD.Print("Pressed keys: " + "[" + string.Join(",", pressedKeys.Select(k => k.ToString())) + "]");
 
 		if (pressedKeys.Count > 0) //check if anny key is pressed
 		{
 			Key lastKey = pressedKeys[pressedKeys.Count - 1]; // check wich key is last pressed
 
-			if (lastKey == Key.S && !stopAtBottomWall) movement.Y -= amount;
-			else if (lastKey == Key.Z && !stopAtTopWall) movement.Y += amount;
+			if (lastKey == Key.S ) movement.Y -= velocity;
+			else if (lastKey == Key.Z ) movement.Y += velocity;
 		}
 
-		this.Position += movement;
+		
+		// Check for collisions and adjust movement if necessary
+		var collisionInfo = MoveAndCollide(movement);
+		if (collisionInfo != null) this.Position += movement; // var collisionInfo = MoveAndCollide(movement); the if is not nessery to stop movement its not needed only added out of readability
 	}
 }
