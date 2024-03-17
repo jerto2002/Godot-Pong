@@ -104,6 +104,7 @@ public partial class Ball : StaticBody2D
     {
         // Set the ball position to a predefined starting position
         Position = new Vector2(0, 0); // Adjust the position as needed
+        _velocity = new Vector2(300, 0);
     }
 
 
