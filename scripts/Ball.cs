@@ -33,74 +33,78 @@ public partial class Ball : StaticBody2D
 
             OffPlayerBounceLogic(collidedNode);
         }
-
-        // Normalize the velocity to ensure consistent speed
-       // _velocity = _velocity.Normalized() * 250; // Adjust 250 as needed for the desired speed
     }
 
-   private void OffPlayerBounceLogic(Node collidedNode)
-{
-    if (collidedNode is CharacterBody2D characterBody)//Bounce of player logic
+    private void OffPlayerBounceLogic(Node collidedNode)
     {
-        // Get the position of the ball
-        Vector2 ballPosition = Position;
-
-        // Subtract the y positions of the ball and the StaticBody2D
-        float yDifference = characterBody.Position.Y - ballPosition.Y;
-
-        // Calculate the angle based on the yDifference
-        float angle;
-        if (yDifference > 0)
+        if (collidedNode is CharacterBody2D characterBody)//Bounce of player logic
         {
-            angle = Mathf.Lerp(0, -Mathf.Pi / 6, yDifference / 100.0f); // Adjust the 100.0f as needed
+            // Get the position of the ball
+            Vector2 ballPosition = Position;
+
+            // Subtract the y positions of the ball and the StaticBody2D
+            float yDifference = characterBody.Position.Y - ballPosition.Y;
+
+            // Calculate the angle based on the yDifference
+            float angle;
+            if (yDifference > 0)
+            {
+                angle = Mathf.Lerp(0, -Mathf.Pi / 6, yDifference / 100.0f); // Adjust the 100.0f as needed
+            }
+            else
+            {
+                angle = Mathf.Lerp(0, Mathf.Pi / 6, -yDifference / 100.0f); // Adjust the 100.0f as needed
+            }
+
+            // Increase the velocity by a factor (e.g., 1.1 for a 10% increase)
+            float velocityIncreaseFactor = 1.1f; // Adjust as needed
+            _velocity *= velocityIncreaseFactor;
+
+            // Set the Y-component of the ball's velocity based on the angle
+            _velocity.Y = Mathf.Sin(angle) * _velocity.Length();
+
+            // Adjust the X-component of the ball's velocity to maintain constant speed
+            _velocity.X = Mathf.Cos(angle) * _velocity.Length() * Mathf.Sign(_velocity.X); // Maintain the original direction
         }
-        else
-        {
-            angle = Mathf.Lerp(0, Mathf.Pi / 6, -yDifference / 100.0f); // Adjust the 100.0f as needed
-        }
-
-        // Increase the velocity by a factor (e.g., 1.1 for a 10% increase)
-        float velocityIncreaseFactor = 1.1f; // Adjust as needed
-        _velocity *= velocityIncreaseFactor;
-
-        // Set the Y-component of the ball's velocity based on the angle
-        _velocity.Y = Mathf.Sin(angle) * _velocity.Length();
-
-        // Adjust the X-component of the ball's velocity to maintain constant speed
-        _velocity.X = Mathf.Cos(angle) * _velocity.Length() * Mathf.Sign(_velocity.X); // Maintain the original direction
     }
-}
-
-
-
     private void CheckForGoal(Node collidedNode)
     {
-        if (collidedNode is StaticBody2D staticBody2D) //check for goal
+        if (collidedNode is StaticBody2D staticBody2D)
         {
-            // Get the groups of the collided node
             var collidedGroups = staticBody2D.GetGroups();
-
-            // Print the groups
 
             if (collidedGroups.Contains("Goal1"))
             {
                 GD.Print("Goal1");
-                Label label = GetNode<Label>("../ScorePlayer1");
-                // Parse the current text and increment by 1
-                int score = int.Parse(label.Text) + 1;
-                // Update the text of the label with the incremented value
-                label.Text = score.ToString();
-            }
-            else if (collidedGroups.Contains("Goal2"))
-            {
-                GD.Print("Goal2");
                 Label label = GetNode<Label>("../ScorePlayer2");
                 // Parse the current text and increment by 1
                 int score = int.Parse(label.Text) + 1;
                 // Update the text of the label with the incremented value
                 label.Text = score.ToString();
+
+                // Reset ball position
+                ResetBallPosition();
+            }
+            else if (collidedGroups.Contains("Goal2"))
+            {
+                GD.Print("Goal2");
+                Label label = GetNode<Label>("../ScorePlayer1");
+                // Parse the current text and increment by 1
+                int score = int.Parse(label.Text) + 1;
+                // Update the text of the label with the incremented value
+                label.Text = score.ToString();
+
+                // Reset ball position
+                ResetBallPosition();
             }
         }
     }
+
+    private void ResetBallPosition()
+    {
+        // Set the ball position to a predefined starting position
+        Position = new Vector2(0, 0); // Adjust the position as needed
+    }
+
 
 }
